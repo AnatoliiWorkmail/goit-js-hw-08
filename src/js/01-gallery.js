@@ -1,5 +1,8 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
+
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 // Change code below this line
 
 console.log(galleryItems);
@@ -28,46 +31,10 @@ function createGalleryMarkup(ga) {
 
 selectGallery.insertAdjacentHTML('beforeend', createGalleryMarkup(galleryItems));
 
-////////////////////////////////////////////////////////////////////////////////////
-
-selectGallery.addEventListener('click', galleryClick);
-
-function galleryClick(evt) {
-  if (evt.target.nodeName !== 'IMG') {
-    return;
-  }
-  console.log(evt.target.dataset);
-  evt.preventDefault();
-  addModal(evt.target.dataset.source);
-}
-let instance;
-// ==============================================
-// function addModal(orig) {
-//   instance = basicLightbox.create(` <img src="${orig}" ></img>`, {
-//     onShow: instance => console.log('onShow', instance),
-//     onClose: instance => console.log('onClose', instance),
-//   });
-//   instance.show(instance => console.log('finished show()', instance));
-// }
-
-// -------------------------------------
-function addModal(orig) {
-  instance = basicLightbox.create(` <img src="${orig}" ></img>`);
-  instance.show(() => {
-    addEscListener();
-  });
-
-  function onEscClick(event) {
-    if (event.code === 'Escape') {
-      instance.close(() => {
-        removeEscListener();
-      });
-    }
-  }
-  function addEscListener() {
-    window.addEventListener('keydown', onEscClick);
-  }
-  function removeEscListener() {
-    window.removeEventListener('keydown', onEscClick);
-  }
-}
+// ------------------------------simple-------
+const lightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 500,
+});
