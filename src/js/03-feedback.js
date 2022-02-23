@@ -67,5 +67,7 @@ function onFormSubmit(evt) {
     console.log(formData);
     evt.currentTarget.reset();
     localStorage.removeItem(KEY);
+  } else {
+    alert`заполните поля`;
   }
 }
